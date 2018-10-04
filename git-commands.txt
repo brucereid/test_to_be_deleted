@@ -1,0 +1,145 @@
+git init
+    In order to use Git we start by identifying a folder as a Git repository. You do that by issuing a Git init command within a folder.
+
+git add <file>
+    We can add anything to the staging environment by using the command called Git add, and then the name of the file that we want to add.
+
+git add .
+    But really most of the time you'll want to work on a number of files, or just add all the files that you've made changes to. That command command is called Git add and then period.
+
+git status
+    You can do a Git status command, and take a look at the status of the files.
+
+git commit -m "comment"
+    Commit is a record of the state of the folder. Whatever was in the staging environment will be locked as a record in the commit log.
+
+git log
+    >Git log shows the record of all the commits that we've been making in our project.
+    >press 'q' to escape out of the log
+    git log --since="2018-07-22" --until="2018-08-14"
+    git log --since=2.weeks --until=2.days
+    git log --author
+    git log [hash]..[hash]
+    git log -p    This wil return a log + diff that shows what changed between commits
+    git log --oneline    returns a log with one line for each commit
+    
+git checkout <file>
+    That means that we're ignoring the changes that we just saved and we pulled whatever was in staging into our work environment.
+
+git reset HEAD <file>
+    If something is already in staging, we can take it out by using this git reset HEAD and then the file name command. This is called unstaging, it's taking whatever was in our staging environment and replacing what's in our working files environment with whatever is in staging.
+
+git rm <file>
+    When you do a git rm command, it can actually take care of deleting the file as well as moving everything into staging.
+
+git rm -r <directory>
+    Remove a directory and all fiels contained therein.
+
+git add --all
+    This is sort of a super push everything into staging, and just don't worry about what's been added or deleted, just kind of grab everything and move it, and don't worry about having to do all the other stuff.
+
+git checkout <hash>
+    > Use these different hashes in git log to pull the commit from the log into the working environment and we do that by using the checkout command. 
+    > So it's telling you that you're in this weird thing called a 'detached HEAD' state, you can look around, make experimental changes, so this is sort of a playground where you can mess around with your project and do whatever you want and then you can go back into the original set of commits without messing anything up. Think of it as an alternate reality that starts at the commit that you checked out. Now it's also telling you right here that if you want to, you can retain what you're doing in this area as another branch. 
+
+git checkout <hash> -- <file>
+    Puts a file from a previous commit into staging. 
+
+git revert <hash>
+    Undoes everything that was done in the last commit and creates a new commit
+    use [ git revert <hash> -in ] to undo the last commit and put it in staging
+
+git branch <new name>
+    Whenever you want to create a branch that saves a state of everything you've done so far, you use this branch command.
+
+git checkout <branch> 
+    Switch to a different branch
+
+git merge <branch>
+    > Merge will take everything from one branch and attempt to pull it into the current branch.
+    > Just remember that when you do this, you're bringing the changes from some other branch into the current branch. You wanna be in the target and merge the branch that you wanna get stuff from. 
+
+git branch -m <old-name> <new-name>
+    Rename a branch
+
+git branch -d <branch>
+    Delete a branch. Will trigger warnings if not fully merged.  Use -D to force delete.
+
+git clone <git url>
+    Clone a repository from Github onto your local computer
+
+rm -dfr .git
+    This command deletes the .git directory, essentially turning the git repository into a plain directory and erasing all logs. Run [git init] to re-create a new git repo from scratch.
+	
+git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+	This configures git to use Notepad++ as its default text editor. Now when you run 'git commit' it opens the Notepad++ for you to enter a detailed message. Save and close to return to vs code.
+
+git commit --ammend 
+    Amend the last commit, eg commit a changed file without adding a new commit, or changing the message of the last commit. Will change the hash of the commit.
+
+git reset [--soft/--mixed/--hard] <hash>
+    Moves the HEAD pointer to a previous commit. 
+    --soft moves the HEAD pointer but does not change anything in staging or the working directory
+    --mixed moves the pointer and makes the staging indes match the repository. Leaves the working directory alone
+    --hard moves the pointer and makes the staging index and the working directory match the repository
+    Once you reset to an earlier commit, the log will not show the hashes for any later commits. It's a good idea to save a copy of the hashes from git log in case you want to reset the reset.
+
+git clean [-n/-f]
+    Permanently deletes untracked files from working directory
+    -n performs a test run, listing the files that will be deleted
+    -f forces the deletion
+
+git ls-tree <tree-ish>
+    returns a list of files and directories in a repository. The <tree-ish> element refers to a specific commit. Can use HEAD^ for current repo, HEAD^^ for parent of current commit, HEAD~3 for grandparent, <hash>, etc.
+
+git show <tree-ish>
+    git show <hash of commit> will display a diff of the commit, comparing it with what went before
+    git show <file> will display content of file
+    git show <directory> will show a list of the contents
+
+git diff <hash of previous commit>
+    shows diff comparing previous commit to current repository
+    git diff <tree-ish>..<tree-ish> Compares anything to anything
+
+git branch --merged
+    Shows all branches that are contained within current branch, eg that have been merged with current branch or that current branch is a branch off of.
+
+git branch -m <oldname> <newname>
+    Renames a branch
+
+git merge <branch>
+    merges the <branch> into the current branch
+
+git merge --abort
+    stops merge, handy with conflicts
+
+git stash save "description of what's in the stash"
+    This will take any modified files that you are not yet ready to commit and put them in the stash, so you can checkout a different branch 
+
+git stash list
+    returns stash identifier (numbered, from 0), name of the branch, and description. eg stash@{0} On branchname: This is my description
+
+git stash show stash@{0}
+    shows what is in stash@{0} and numbe rof changes. Use git stash show -p stash@{0} to display the complete diff
+
+git stash pop stash@{0}
+    merges the files from stash into the working directory and deletes the stash.
+
+git stash apply stash@{0}
+    merges the files from stash into the working directory but keeps the stash.
+
+git stash drop stash@{0}
+    removes stashed item
+
+git stash clear
+    erases entire stash
+
+git config --global core.editor "code --wait"
+    make VS Code the default text editor for git
+
+git config --global -e
+    open the global (user) config file in VS Code
+
+git config --global core.editor="'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+    make Notepad++ the default text editor. 
+
